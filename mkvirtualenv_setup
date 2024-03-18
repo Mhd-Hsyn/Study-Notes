@@ -1,0 +1,35 @@
+sudo apt-get install python-pip
+
+
+sudo pip install virtualenv
+
+
+
+mkdir ~/.virtualenvs
+
+
+sudo pip install virtualenvwrapper
+
+
+
+
+WORKON SETUP :
+
+
+sudo apt install vim
+
+
+vim .bashrc
+
+		***** COPY PASTE THIS ON .bashrc ******
+		
+			
+		#Virtualenvwrapper settings:
+		export PATH=$HOME/.local/bin:$PATH
+
+		. /usr/local/bin/virtualenvwrapper.sh
+
+		export WORKON_HOME=$HOME/.virtualenvs
+		export VIRTUALENVWRAPPER_PYTHON=$(which python3)
+		source /usr/local/bin/virtualenvwrapper.sh
+
