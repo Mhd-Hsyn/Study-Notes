@@ -1,0 +1,204 @@
+______  cmd   _________
+
+mkvirtualenv (env_name)
+workon   (env_name)
+
+pip freeze > requirements.txt           (creating requirements.txt)
+
+pip install -r requirements.txt         ( install all requiremnts.txt in env)
+
+
+(on gitbash )
+touch .gitignore 
+                      ( write .env)
+
+git init
+git add .
+git commit -m "Initial commit"
+
+=== >> make new repository on github and write 3 commands               
+				1) 	git remote add origin https://github.com/Mhd-Hsyn/e-commerce.git
+				2) 	git branch -M main
+				3) 	git push -u origin main
+
+
+
+
+
+
+
+###########################################################
+
+
+
+
+git config --global user.name "Mhd-Hsyn"
+git config --global user.email "syd.mhd.hsyn@gmail.com"
+
+
+```` Make repository of the folder `````
+
+this will convert folder into git repository !!!
+
+
+git init
+
+
+``````` Add File ```````
+
+git add addition.py
+    `` OR ``
+git add .
+
+
+
+```````` Commit file `````````
+
+git commit -m "initial commit"
+
+
+
+
+
+##################################
+
+pip freez > requirements.txt
+
+git init
+touch .gitignore
+git add .
+git commit -m "initail_commit"
+
+=== >> make new repository on github and write 3 commands               
+				1) 	git remote add origin https://github.com/Mhd-Hsyn/e-commerce.git
+				2) 	git branch -M main
+				3) 	git push -u origin main
+
+
+####################################
+
+
+````` ADD NEW FILE  IN GITHUB ``````
+
+git status
+
+git add.        or       git add FILE_NAME   (first u change the directory)
+
+git commit -m "Added/Modified models.py"
+
+git push   or    git push origin branch-name
+
+
+
+~~~~~~   DELETE File from GITHUB   ~~~~~~~~~~~
+
+git rm FILE_NAME
+git commit -m "Deleted path/to/yourfile.ext"
+git push
+
+
+
+````````````` Create a New Branch ``````````````
+
+git branch new-branch-name
+git checkout new-branch-name
+
+              NOTE : Alternatively, you can combine the branch creation and switch into a single command using the -b flag with git checkout:
+git checkout -b new-branch-name
+
+
+
+
+
+
+####################################
+
+
+### MAking Clone  ####
+mkvirtualenv vethome
+
+
+git init    (git file)
+
+git clone -b khizar https://github.com/shakeebanwar/Project-vethomes.git
+
+       **** for private Repository  ******
+	    Steps: 
+		 create a token from   Setting =>  Developer setting => personal access token => token classic   => and create token
+
+		 git clone https://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@github.com/Mhd-Hsyn/Uber_Project.git
+		 
+		 
+ FROM PERTICULAR BRANCH 	 git clone -b BRANCH_NAME https://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@github.com/Mhd-Hsyn/Uber_Project.git
+
+
+
+       ***** Normal public  ***** 
+	https://github.com/Mhd-Hsyn/Uber_Project.git
+
+
+# create env
+
+mkvirtualenv (env_name)
+workon   (env_name)
+
+pip install -r requirements.txt
+
+https://github.com/Virtualtriage/VtDashboard.git
+
+
+
+
+########################################################
+#####################################
+
+py -m pip install -r requirements.txt
+
+
+
+########################################################################
+
+
+******* REMOVE ORIGIN AND ADD NEW ORIGIN ***********
+
+check origin first:
+
+		git remote -v
+
+remove origin:
+
+		git remote remove origin
+
+
+add new origin: 
+		
+		git remote add origin https://{YOUR_TOKEN}@github.com/mohammedshoaibdeveloper/VT-Mobile-App.git
+		git remote add origin https://__TOKEN__@githib__LINKKKK
+		
+
+check git status:
+	
+		git status       (on branch hussain)
+
+remove chahe:
+
+		git rm -r --cached .
+
+
+( if env upload then remove cache )
+
+
+MY TOKEN
+
+
+git remote add origin https://{YOUR_TOKEN}@github.com/mohammadshoaibhnhtechsolutions/VT-MobileApp-Backend.git
+
+
+git clone -b updated_portal https://{YOUR_TOKEN}@github.com/Virtualtriage/VtDashboard.git
+
+
+
+
+
+
+
