@@ -1,0 +1,19 @@
+1.apt-update
+2.apt-upgrade
+3.apt install to
+4.go to Desktop
+5.git clone https://github.com/brainfucksec/kalitorify
+6.cd kalitorify
+7.make install
+8.reboot
+
+stop Vpn
+sudo kalitorify -c
+
+start vpn
+sudo kalitorify -t
+
+
+
+
+
