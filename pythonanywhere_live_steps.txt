@@ -11,7 +11,7 @@
 
 
 4) python manage.py collectstatic
-5) pip install django-cors-header
+5) pip install django-cors-headers
 
 ( do seeting of both in settings.py )
 
