@@ -1,0 +1,22 @@
+********** NGROK SETUP **************
+
+ARTICLE : ______ https://ngrok.com/docs/guides/device-gateway/linux/
+
+
+
+sudo apt update 
+
+
+wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz
+
+
+sudo tar xvzf ./ngrok-v3-stable-linux-amd64.tgz -C /usr/local/bin
+
+
+
+ ( STEPS   apko account sigin kr k token rkhna h )
+
+ngrok authtoken   {TOKEN}
+
+
+ngrok http 8001
