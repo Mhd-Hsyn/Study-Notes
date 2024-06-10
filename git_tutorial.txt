@@ -96,6 +96,13 @@ git rm FILE_NAME
 git commit -m "Deleted path/to/yourfile.ext"
 git push
 
+___________________________________________________
+
+
+git merge origin/hussain --allow-unrelated-histories
+
+
+
 
 
 ````````````` Create a New Branch ``````````````
@@ -197,6 +204,45 @@ git remote add origin https://{YOUR_TOKEN}@github.com/mohammadshoaibhnhtechsolut
 git clone -b updated_portal https://{YOUR_TOKEN}@github.com/Virtualtriage/VtDashboard.git
 
 
+
+###########################################################################################################################################
+
+
+
+USERNAME:	Mhd-Hsyn
+_____  TOKEN  _______
+
+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
+----------------------------------------------------------------
+
+
+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
+
+
+https://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@github.com/muhammadhussainhnhtech/VoiceFuse.git
+
+
+
+
+
+
+
+_____           ###################              ___________
+
+
+
+
+
+USERNAME:	muhammadhussainhnhtech
+	
+_____ HNH TOKEN  _______   
+
+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
+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
+
+
+
+https://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@github.com/mohammedshoaibdeveloper/Project-familyhandbook.git 
 
 
 
