@@ -33,3 +33,241 @@ vim .bashrc
 		export VIRTUALENVWRAPPER_PYTHON=$(which python3)
 		source /usr/local/bin/virtualenvwrapper.sh
 
+
+
+
+
+if this error come        Ubuntu 24.04.1 LTS
+
+
+admin12@admin12-HP-ProBook-430-G3:~$ pip3 install virtualenv
+error: externally-managed-environment
+
+× This environment is externally managed
+╰─> To install Python packages system-wide, try apt install
+    python3-xyz, where xyz is the package you are trying to
+    install.
+    
+    If you wish to install a non-Debian-packaged Python package,
+    create a virtual environment using python3 -m venv path/to/venv.
+    Then use path/to/venv/bin/python and path/to/venv/bin/pip. Make
+    sure you have python3-full installed.
+    
+    If you wish to install a non-Debian packaged Python application,
+    it may be easiest to use pipx install xyz, which will manage a
+    virtual environment for you. Make sure you have pipx installed.
+    
+    See /usr/share/doc/python3.12/README.venv for more information.
+
+note: If you believe this is a mistake, please contact your Python installation or OS distribution provider. You can override this, at the risk of breaking your Python installation or OS, by passing --break-system-packages.
+hint: See PEP 668 for the detailed specification.
+
+
+
+
+Step No 1
+		
+		sudo apt install python3-virtualenv
+
+Step No 2
+
+		sudo apt install python3-virtualenvwrapper
+		
+Step No 3
+
+		which virtualenv
+					output:  /usr/bin/virtualenv
+					
+		which virtualenv
+					output: /usr/bin/virtualenv
+
+Step No 4
+
+		sudo vim .bashrc
+		
+		
+		
+		#Virtualenvwrapper settings:
+		
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_VIRTUALENV=/home/{laptop+++name}/.local/bin/virtualenv
+source ~/.local/bin/virtualenvwrapper.sh
+		
+
+
+
+
+
+#######################################################
+
+
+admin12@admin12-HP-ProBook-430-G3:~$ sudo apt install python3-pip
+[sudo] password for admin12: 
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+python3-pip is already the newest version (24.0+dfsg-1ubuntu1).
+The following package was automatically installed and is no longer required:
+  mailcap
+Use 'sudo apt autoremove' to remove it.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+admin12@admin12-HP-ProBook-430-G3:~$ pip3 --version
+pip 24.0 from /usr/lib/python3/dist-packages/pip (python 3.12)
+admin12@admin12-HP-ProBook-430-G3:~$ pip3 install virtualenv
+error: externally-managed-environment
+
+× This environment is externally managed
+╰─> To install Python packages system-wide, try apt install
+    python3-xyz, where xyz is the package you are trying to
+    install.
+    
+    If you wish to install a non-Debian-packaged Python package,
+    create a virtual environment using python3 -m venv path/to/venv.
+    Then use path/to/venv/bin/python and path/to/venv/bin/pip. Make
+    sure you have python3-full installed.
+    
+    If you wish to install a non-Debian packaged Python application,
+    it may be easiest to use pipx install xyz, which will manage a
+    virtual environment for you. Make sure you have pipx installed.
+    
+    See /usr/share/doc/python3.12/README.venv for more information.
+
+note: If you believe this is a mistake, please contact your Python installation or OS distribution provider. You can override this, at the risk of breaking your Python installation or OS, by passing --break-system-packages.
+hint: See PEP 668 for the detailed specification.
+admin12@admin12-HP-ProBook-430-G3:~$ sudo apt install python3-virtualenv
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following package was automatically installed and is no longer required:
+  mailcap
+Use 'sudo apt autoremove' to remove it.
+The following additional packages will be installed:
+  python3-distlib python3-filelock python3-wheel-whl
+Recommended packages:
+  python3-distutils
+The following NEW packages will be installed:
+  python3-distlib python3-filelock python3-virtualenv python3-wheel-whl
+0 upgraded, 4 newly installed, 0 to remove and 0 not upgraded.
+Need to get 468 kB of archives.
+After this operation, 1,677 kB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://pk.archive.ubuntu.com/ubuntu noble/universe amd64 python3-distlib all 0.3.8-1 [318 kB]
+Get:2 http://pk.archive.ubuntu.com/ubuntu noble/universe amd64 python3-filelock all 3.13.1-1 [10.8 kB]
+Get:3 http://pk.archive.ubuntu.com/ubuntu noble/universe amd64 python3-wheel-whl all 0.42.0-2 [67.8 kB]
+Get:4 http://pk.archive.ubuntu.com/ubuntu noble/universe amd64 python3-virtualenv all 20.25.0+ds-2 [70.8 kB]
+Fetched 468 kB in 2s (227 kB/s)               
+Selecting previously unselected package python3-distlib.
+(Reading database ... 210353 files and directories currently installed.)
+Preparing to unpack .../python3-distlib_0.3.8-1_all.deb ...
+Unpacking python3-distlib (0.3.8-1) ...
+Selecting previously unselected package python3-filelock.
+Preparing to unpack .../python3-filelock_3.13.1-1_all.deb ...
+Unpacking python3-filelock (3.13.1-1) ...
+Selecting previously unselected package python3-wheel-whl.
+Preparing to unpack .../python3-wheel-whl_0.42.0-2_all.deb ...
+Unpacking python3-wheel-whl (0.42.0-2) ...
+Selecting previously unselected package python3-virtualenv.
+Preparing to unpack .../python3-virtualenv_20.25.0+ds-2_all.deb ...
+Unpacking python3-virtualenv (20.25.0+ds-2) ...
+Setting up python3-filelock (3.13.1-1) ...
+Setting up python3-distlib (0.3.8-1) ...
+Setting up python3-wheel-whl (0.42.0-2) ...
+Setting up python3-virtualenv (20.25.0+ds-2) ...
+Processing triggers for man-db (2.12.0-4build2) ...
+admin12@admin12-HP-ProBook-430-G3:~$ which virtualenv
+/usr/bin/virtualenv
+admin12@admin12-HP-ProBook-430-G3:~$ pip3 install virtualenvwrapper
+error: externally-managed-environment
+
+× This environment is externally managed
+╰─> To install Python packages system-wide, try apt install
+    python3-xyz, where xyz is the package you are trying to
+    install.
+    
+    If you wish to install a non-Debian-packaged Python package,
+    create a virtual environment using python3 -m venv path/to/venv.
+    Then use path/to/venv/bin/python and path/to/venv/bin/pip. Make
+    sure you have python3-full installed.
+    
+    If you wish to install a non-Debian packaged Python application,
+    it may be easiest to use pipx install xyz, which will manage a
+    virtual environment for you. Make sure you have pipx installed.
+    
+    See /usr/share/doc/python3.12/README.venv for more information.
+
+note: If you believe this is a mistake, please contact your Python installation or OS distribution provider. You can override this, at the risk of breaking your Python installation or OS, by passing --break-system-packages.
+hint: See PEP 668 for the detailed specification.
+admin12@admin12-HP-ProBook-430-G3:~$ sudo apt install python3-
+Display all 4440 possibilities? (y or n)^C
+admin12@admin12-HP-ProBook-430-G3:~$ ^C
+admin12@admin12-HP-ProBook-430-G3:~$ ^C
+admin12@admin12-HP-ProBook-430-G3:~$ sudo apt install python3-virtualenvwrapper
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following package was automatically installed and is no longer required:
+  mailcap
+Use 'sudo apt autoremove' to remove it.
+The following additional packages will be installed:
+  python3-pbr python3-stevedore python3-virtualenv-clone virtualenv virtualenvwrapper
+Suggested packages:
+  virtualenvwrapper-doc
+The following NEW packages will be installed:
+  python3-pbr python3-stevedore python3-virtualenv-clone python3-virtualenvwrapper virtualenv virtualenvwrapper
+0 upgraded, 6 newly installed, 0 to remove and 0 not upgraded.
+Need to get 131 kB of archives.
+After this operation, 769 kB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://pk.archive.ubuntu.com/ubuntu noble/main amd64 python3-pbr all 5.11.1-0ubuntu1 [66.5 kB]
+Get:2 http://pk.archive.ubuntu.com/ubuntu noble/universe amd64 python3-virtualenv-clone all 0.5.7-1 [9,284 B]
+Get:3 http://pk.archive.ubuntu.com/ubuntu noble/main amd64 python3-stevedore all 1:5.1.0-0ubuntu1 [21.0 kB]
+Get:4 http://pk.archive.ubuntu.com/ubuntu noble/universe amd64 python3-virtualenvwrapper all 4.8.4-4ubuntu1 [12.6 kB]
+Get:5 http://pk.archive.ubuntu.com/ubuntu noble/universe amd64 virtualenv all 20.25.0+ds-2 [1,978 B]
+Get:6 http://pk.archive.ubuntu.com/ubuntu noble/universe amd64 virtualenvwrapper all 4.8.4-4ubuntu1 [19.6 kB]
+Fetched 131 kB in 1s (109 kB/s)              
+Selecting previously unselected package python3-pbr.
+(Reading database ... 210542 files and directories currently installed.)
+Preparing to unpack .../0-python3-pbr_5.11.1-0ubuntu1_all.deb ...
+Unpacking python3-pbr (5.11.1-0ubuntu1) ...
+Selecting previously unselected package python3-virtualenv-clone.
+Preparing to unpack .../1-python3-virtualenv-clone_0.5.7-1_all.deb ...
+Unpacking python3-virtualenv-clone (0.5.7-1) ...
+Selecting previously unselected package python3-stevedore.
+Preparing to unpack .../2-python3-stevedore_1%3a5.1.0-0ubuntu1_all.deb ...
+Unpacking python3-stevedore (1:5.1.0-0ubuntu1) ...
+Selecting previously unselected package python3-virtualenvwrapper.
+Preparing to unpack .../3-python3-virtualenvwrapper_4.8.4-4ubuntu1_all.deb ...
+Unpacking python3-virtualenvwrapper (4.8.4-4ubuntu1) ...
+Selecting previously unselected package virtualenv.
+Preparing to unpack .../4-virtualenv_20.25.0+ds-2_all.deb ...
+Unpacking virtualenv (20.25.0+ds-2) ...
+Selecting previously unselected package virtualenvwrapper.
+Preparing to unpack .../5-virtualenvwrapper_4.8.4-4ubuntu1_all.deb ...
+Unpacking virtualenvwrapper (4.8.4-4ubuntu1) ...
+Setting up python3-pbr (5.11.1-0ubuntu1) ...
+Setting up python3-virtualenv-clone (0.5.7-1) ...
+Setting up virtualenv (20.25.0+ds-2) ...
+Setting up python3-stevedore (1:5.1.0-0ubuntu1) ...
+Setting up python3-virtualenvwrapper (4.8.4-4ubuntu1) ...
+Setting up virtualenvwrapper (4.8.4-4ubuntu1) ...
+Processing triggers for man-db (2.12.0-4build2) ...
+admin12@admin12-HP-ProBook-430-G3:~$ which virtualenv
+/usr/bin/virtualenv
+admin12@admin12-HP-ProBook-430-G3:~$ sudo vim .bashrc
+admin12@admin12-HP-ProBook-430-G3:~$ workon 
+assencians
+test
+test_env
+admin12@admin12-HP-ProBook-430-G3:~$ rmvirtualenv test
+Removing test...
+admin12@admin12-HP-ProBook-430-G3:~$ 
+
+
+
+
+#Virtualenvwrapper settings:
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_VIRTUALENV=/home/{laptop+++name}/.local/bin/virtualenv
+source ~/.local/bin/virtualenvwrapper.sh
