@@ -1,0 +1,81 @@
+##############  GitHub Actions   ##############
+
+
+
+	- Go to your repo
+	- click on tab Actions
+	- click on Runner
+	
+copy the command and paste ony by one
+
+
+
+After GitHub all commands is running successfully
+
+
+Go to runner folder in your instance:
+
+sudo ./svc.sh install
+sudo ./svc.sh start
+
+
+
+
+create ci.yml
+write code to make .env file
+
+on git-hub repo setting ==> go "Secrets and Variables"  ==>>  Actions 
+		 
+		Add env variables
+		
+	
+	Then Install Docker
+
+
+ - sudo apt update
+ - sudo apt install docker.io
+ - sudo apt install docker-compose-v2
+
+
+use DOCKER in UBUNTU User
+
+ - sudo usermod -aG docker ubuntu
+ - newgrp docker
+ - docker ps
+
+
+
+	
+* if you are facing any permissin related issues so run runner as a root user but this approach is not recommended
+
+
+
+	- sudo usermod -aG docker ubuntu
+	- ls /etc/systemd/system/ | grep actions
+
+(output) actions.runner.Mhd-Hsyn-Law_Firm-CRM.ip-172-31-84-115.service
+
+
+	- sudo systemctl restart [OUT_PUT]
+	
+
+
+ - ls /etc/systemd/system | grep actions.runner
+
+(output) actions.runner.Mhd-Hsyn-Law_Firm-CRM.ip-172-31-19-61.service
+
+ - sudo systemctl restart [output]
+ - sudo vim /etc/systemd/system/[output] (open this file and change user to root user)
+ - sudo systemctl daemon-reload
+ - sudo systemctl restart [output]
+ - sudo systemctl status [output]
+
+ - ps -o user= -p 1557
+
+
+
+
+
+
+
+
