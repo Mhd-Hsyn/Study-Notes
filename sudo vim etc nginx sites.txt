@@ -1,0 +1,91 @@
+
+Install Nginix
+
+# 1. Update your package list
+sudo apt update
+
+# 2. Install Nginx
+sudo apt install nginx -y
+
+# 3. Start Nginx
+sudo systemctl start nginx
+
+# 4. Enable Nginx to auto-start on boot
+sudo systemctl enable nginx
+
+# 5. Check status
+sudo systemctl status nginx
+
+
+Install CertBot
+
+sudo apt install certbot python3-certbot-nginx
+
+
+##################################################################################################################
+
+sudo certbot
+
+sudo nginx -t
+
+##################################################################################################################
+
+
+sudo vim /etc/nginx/sites-available/lawfirm_api
+sudo ln -s /etc/nginx/sites-available/lawfirm_api /etc/nginx/sites-enabled
+sudo systemctl restart nginx
+
+
+server {
+    listen 80;
+    server_name law-firm.devssh.com;
+
+     proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-Proto $scheme;
+
+
+    location / {
+
+        proxy_pass http://52.90.171.118:9005;
+    }
+}
+
+
+
+
+
+server {
+    listen 80;
+    server_name collubichat.devssh.xyz;
+
+     proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-Proto $scheme;
+
+
+    location / {
+
+        proxy_pass localhost:8008;
+    }
+}
+
+SOCKETS
+
+server {
+    listen 80;
+    server_name collubichat.devssh.xyz;
+
+    location / {
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header Host $host;
+
+      proxy_pass http://localhost:8080;
+
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "upgrade";
+    }
+  }
