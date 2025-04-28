@@ -1,0 +1,255 @@
+JENKINS SETUP
+
+ssh -i "Law-Firm-AWS.pem" ubuntu@ec2-52-90-171-118.compute-1.amazonaws.com  (lawfirm agent/node)   ip == >> 52.90.171.118
+
+ssh -i "Collubi-Backend.pem" ubuntu@ec2-18-220-70-62.us-east-2.compute.amazonaws.com   (Collubi / Jenkins Master)   ip == >> 18.220.70.62
+
+http://18.220.70.62:8080/   Jenkins Dashboard
+http://18.220.70.62:8080/computer/
+
+
+55 mint
+
+
+############## Jenkins Installation ##############
+
+
+link =>> https://www.jenkins.io/doc/book/installing/linux/
+
+
+1) first install java
+
+	sudo apt update
+	sudo apt install fontconfig openjdk-17-jre
+	java -version
+
+
+2) Install Jenkins Long Term Support release
+
+	- sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+		  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+	  
+	- echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]" \
+		  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+		  /etc/apt/sources.list.d/jenkins.list > /dev/null
+
+	- sudo apt-get update
+	
+	- sudo apt-get install jenkins
+	
+
+
+
+3) Test is Jenkins is runing ?
+
+	- systemctl status jenkins
+
+
+4) If my sysytem will restart then automatically jenkins should be start
+
+	- sudo systemctl enable jenkins
+
+
+
+	
+The Jenkins is runing on port 8080, you should allow port 8080 on server
+
+security =>  security group => inbound rules => Edit incoming traffic =>  Add new rule =>   
+
+
+* After you allow port then you go on url for Jenkins Dashboard
+
+	- http://{your_ip}:8080
+	
+	- Jenkins is now LOCK
+	
+	- copy the path   =>>>   path  ==>>  /var/lib/jenkins/secrets/initialAdminPassword
+	
+
+	- For Unlock Jenkins Copy the Password from server terminal  ===>>>>  go to the terminal 
+	
+	- sudo cat {path}
+	- sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+	
+	- copy the password and paste on Dashboard and login
+
+	- Install suggested plugins
+	
+	- Create first Admin User
+
+###########################################
+
+CREATE A PIPELINE
+
+	click on new item and select pipeline
+	write the jenkins file (hello world)
+	and save
+	
+	You can create folder and check /var/lib/jenkins/workspace/TestPipeline 
+
+
+
+
+###########################################
+
+For create Agent  ( search node on jenkins dashboard and add node )
+
+	- install Java on new instance (slave/child)
+	
+	- on master run command for generate key
+		- cd ~/.ssh
+		- ssh-keygen
+		
+			output  (Your identification has been saved in /home/hussain/.ssh/[id_rsa])
+	   		private will be on master server and public on agent
+		
+		- cat [id_rsa].pub	(private)
+		- cat [id_rsa]		(public)
+		
+	- Go on Agent/child, AND add public key of master
+	
+	
+	
+	
+	- Go On Jenkins Dashboard
+	
+		- create node
+		- add name and description
+		- "Remote root directory" will be (/home/ubuntu)
+		- "Labels"    [kuch b naam ho skta h jo pipeline ki jenkins ki file me use hoga]
+		-  "Launch method"    === >>> (launch agent via ssh)
+			- "HOST"   child instance ki ip address  52.90.171.118
+			- "Credentials"     agent ko connect krny ki key (come on master and get private key and paste ==>> cd ~/.ssh ==>> ssh-keygen ==>> cat private key)
+				- add new credentials if not
+					- " Kind "   == >>  " SSH Username with private key "
+					- " ID "    kuch b ho skti h
+					- " Username "    ubuntu
+					- checkbox "Enter Directly" 
+					- mater ki private key paste krdo
+					
+			- after create / select the cridentials
+			- " Host Key Verification Strategy "   non verifying
+		
+		
+	*** Ap ne Jenkins me master ki private key add krdi h ab apne "CHILD" system me "Master ki Public key" add krni h
+	
+	- Go on Agent Terminal
+		- cd .ssh/
+		- ubuntu@ip-172-31-19-61:~/.ssh$ ls
+			authorized_keys
+			ubuntu@ip-172-31-19-61:~/.ssh$ vim authorized_keys 
+		- paste public key of master
+		
+
+BONUS Tip:
+
+Jenkins master me ye command chalao
+ssh -i ~/.ssh/id_rsa ubuntu@[agent_ip]
+ssh -i ~/.ssh/id_rsa ubuntu@52.90.171.118
+
+ab ap k jenkins master ka server , apny child/slave k server sy connect hojaye ga (same .pem file ki trha)
+Q k ap apnay master ki private key ko bol rahy ho k is agent sy connect kro, ar ap k agent k authorized_keys me master ki public key h
+so connect hojaye ga 
+
+
+*** Problem ***
+agr apka master jenkins Dashboard sy agent ko connect na kr sakay tu 
+
+ap apny slave/agent k terminal pr logs check krain
+	
+	-  sudo tail -f /var/log/auth.log
+	
+
+
+###########################################
+
+
+GIT HUB Access token in JENKINS 
+
+github-access-token Jenkins credentials ID hai — isko manually Jenkins mein add karna padta hai.
+
+Yahan se step-by-step bata raha hoon:
+✅ Step-by-Step: How to Add github-access-token to Jenkins
+🔹 Step 1: Go to Jenkins Credentials
+
+    Open Jenkins dashboard
+
+    Click “Manage Jenkins”
+
+    Click “Credentials”
+
+    Under “(global)”, click → “Add credentials”
+
+🔹 Step 2: Generate GitHub Token
+
+    Go to: https://github.com/settings/tokens
+
+    Click “Generate new token (classic)”
+
+    Set:
+
+        Note: Jenkins Deployment
+
+        Expiration: Choose appropriate (e.g., 90 days or "No Expiry" if you're testing locally)
+
+        Scopes (tick these):
+
+            repo
+
+            workflow (if CI/CD needed)
+
+    Generate → Copy the token immediately
+
+🔹 Step 3: Add Credential in Jenkins
+
+    Back in Jenkins “Add Credentials” page:
+
+        Kind: Username with password
+
+        Username: git (or leave blank)
+
+        Password: (Paste your GitHub token here)
+
+        ID: github-access-token ✅
+
+        Description: Something like "GitHub Token for Law Firm CRM"
+
+Click Save ✅
+🔹 Step 4: Use in Jenkinsfile
+
+git branch: 'beta-master',
+    url: 'https://github.com/Mhd-Hsyn/Law_Firm-CRM.git',
+    credentialsId: 'github-access-token'
+
+🎉 Result:
+
+Jenkins ab securely GitHub se repo pull karega without exposing token in Jenkinsfile.
+
+Let me know if:
+
+    Tu Jenkins locally chala raha hai ya EC2 par
+
+    Tu webhook bhi lagana chahta hai GitHub → Jenkins trigger ke liye
+
+Tayyar ho ja bro, tu next DevOps ninja banne wala hai 🐱‍💻🔥
+
+
+######################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
