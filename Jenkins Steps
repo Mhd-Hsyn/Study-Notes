@@ -1,14 +1,19 @@
 JENKINS SETUP
 
-ssh -i "Law-Firm-AWS.pem" ubuntu@ec2-52-90-171-118.compute-1.amazonaws.com  (lawfirm agent/node)   ip == >> 52.90.171.118
+ssh -i "Law-Firm-AWS.pem" ubuntu@ec2-52-90-171-118.compute-1.amazonaws.com
+(lawfirm agent/node)   ip == >> 52.90.171.118
 
-ssh -i "Collubi-Backend.pem" ubuntu@ec2-18-220-70-62.us-east-2.compute.amazonaws.com   (Collubi / Jenkins Master)   ip == >> 18.220.70.62
+ssh -i "Collubi-Backend.pem" ubuntu@ec2-18-220-70-62.us-east-2.compute.amazonaws.com
+(Collubi / Jenkins Master)   ip == >> 18.220.70.62
 
 http://18.220.70.62:8080/   Jenkins Dashboard
 http://18.220.70.62:8080/computer/
 
 
-55 mint
+
+docker login -u mhdhsyn
+dckr_pat_kUUyV7qhkdR29zTdLVo2LAdDOj0
+
 
 
 ############## Jenkins Installation ##############
@@ -77,7 +82,8 @@ security =>  security group => inbound rules => Edit incoming traffic =>  Add ne
 	
 	- Create first Admin User
 
-###########################################
+######################################################################################
+
 
 CREATE A PIPELINE
 
@@ -90,7 +96,8 @@ CREATE A PIPELINE
 
 
 
-###########################################
+######################################################################################
+
 
 For create Agent  ( search node on jenkins dashboard and add node )
 
@@ -161,82 +168,332 @@ ap apny slave/agent k terminal pr logs check krain
 	
 
 
-###########################################
+######################################################################################
 
+Connect Docker Hub To Jenkins
+
+	- Add the credentials on Jenkins Dashbaord
+	- Create a Personal access token from the Docker Hub
+	- You can simply Login via that personal token
+	
+		- docker login -u mhdhsyn
+		- dckr_pat_kUUyV7qhkdR29zTdLVo2LAdDOj0
+	
+	
+	- On Jenkins Dashboard add username (mhdhsyn)
+	- Create and ID for that credentials (DockerHubCred_mhdhsyn)
+	- On password add the access token of Docker Hub
+	
+	
+	- On JENKINS FILE
+	
+	withCredentials([usernamePassword(
+                    credentialsId: "DockerHubCred_mhdhsyn", 
+                    passwordVariable:"DockerHubPass", 
+                    usernameVariable:"dockerHubUser")]
+                    ){
+                        sh "sudo docker login -u ${env.dockerHubUser} -p ${env.DockerHubPass}"
+                        sh "sudo docker image tag djangocicd-web:latest ${env.dockerHubUser}/djangocicd-web:latest"
+                        sh "sudo docker push ${env.dockerHubUser}/djangocicd-web:latest"
+                }  
+
+
+######################################################################################
+
+
+Add a webhook on GitHub Repository settings
+
+
+http://18.220.70.62:8080/github-webhook/
+your ip and then /github-webhook/
+
+if not ssl then disable SSL verification
+
+
+create or uodate webhook
+
+if not tick, and cross show "X"
+	- then "Redeliver" that delivery
+	
+
+After sucessfull 
+ON JENKINS DASHBOARD   PIPELINE configure should be tick   "GitHub hook trigger for GITScm polling"    
+
+
+	stage('Code') {
+	    steps {
+		echo 'Hello Cloning The Code'
+		git url: "https://github.com/Mhd-Hsyn/test-deployment.git", branch: "beta-master"
+		echo 'Code clone sucessfully'
+	    }
+	}
+
+
+######################################################################################
+
+For GitHub Private Repo  
 
 GIT HUB Access token in JENKINS 
 
-github-access-token Jenkins credentials ID hai — isko manually Jenkins mein add karna padta hai.
+Create New Credentials on jenkins Dashboard
 
-Yahan se step-by-step bata raha hoon:
-✅ Step-by-Step: How to Add github-access-token to Jenkins
-🔹 Step 1: Go to Jenkins Credentials
+    Add a new "Username with password" credential:
 
-    Open Jenkins dashboard
+        Username: your GitHub username
 
-    Click “Manage Jenkins”
+        Password: the GitHub PAT (token)
 
-    Click “Credentials”
-
-    Under “(global)”, click → “Add credentials”
-
-🔹 Step 2: Generate GitHub Token
-
-    Go to: https://github.com/settings/tokens
-
-    Click “Generate new token (classic)”
-
-    Set:
-
-        Note: Jenkins Deployment
-
-        Expiration: Choose appropriate (e.g., 90 days or "No Expiry" if you're testing locally)
-
-        Scopes (tick these):
-
-            repo
-
-            workflow (if CI/CD needed)
-
-    Generate → Copy the token immediately
-
-🔹 Step 3: Add Credential in Jenkins
-
-    Back in Jenkins “Add Credentials” page:
-
-        Kind: Username with password
-
-        Username: git (or leave blank)
-
-        Password: (Paste your GitHub token here)
-
-        ID: github-access-token ✅
-
-        Description: Something like "GitHub Token for Law Firm CRM"
-
-Click Save ✅
-🔹 Step 4: Use in Jenkinsfile
-
-git branch: 'beta-master',
-    url: 'https://github.com/Mhd-Hsyn/Law_Firm-CRM.git',
-    credentialsId: 'github-access-token'
-
-🎉 Result:
-
-Jenkins ab securely GitHub se repo pull karega without exposing token in Jenkinsfile.
-
-Let me know if:
-
-    Tu Jenkins locally chala raha hai ya EC2 par
-
-    Tu webhook bhi lagana chahta hai GitHub → Jenkins trigger ke liye
-
-Tayyar ho ja bro, tu next DevOps ninja banne wala hai 🐱‍💻🔥
+        ID: something like GitHubPrivateCreds
+        
+        Note: No need to embed username or token in the URL. Jenkins will handle it via credentialsId.
 
 
-######################################################################
+
+        stage('Code') {
+            steps {
+                echo 'Hello Cloning The Code'
+                git credentialsId: 'GithubPrivateCredsHussain', url: 'https://github.com/Mhd-Hsyn/test-deployment.git', branch: 'beta-master'
+                echo 'Code clone successfully'
+            }
+        }
 
 
+############################################################################################################################################################################
+
+Jenkins file
+
+pipeline {
+    agent {label "TestNodeLabel"}
+
+    stages {
+        stage('Code') {
+            steps {
+                echo 'Hello Cloning The Code'
+                git credentialsId: 'GithubPrivateCredsHussain', url: 'https://github.com/Mhd-Hsyn/test-deployment.git', branch: 'beta-master'
+                echo 'Code clone successfully'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Hello Building the code'
+                sh "sudo docker compose down"
+                sh "sudo docker compose up --build -d"
+                echo 'Docker Compose Build sucessfully'
+            }
+        }
+        stage('Push To Docker Hub') {
+            steps {
+                echo 'Testing the code'
+                withCredentials([usernamePassword(
+                    credentialsId: "DockerHubCred_mhdhsyn", 
+                    passwordVariable:"DockerHubPass", 
+                    usernameVariable:"dockerHubUser")]
+                    ){
+                        sh "sudo docker login -u ${env.dockerHubUser} -p ${env.DockerHubPass}"
+                        sh "sudo docker image tag djangocicd-web:latest ${env.dockerHubUser}/djangocicd-web:latest"
+                        sh "sudo docker push ${env.dockerHubUser}/djangocicd-web:latest"
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying the Code'
+            }
+        }
+    }
+}
+
+
+
+
+
+######################################################################################
+
+
+
+
+Agr Jenkins Master per hi apni job chalani h tu LAZMI 2 steps follow krain
+
+1) use docker from ubuntu, not sudo
+2)     agent any
+
+
+sudo groupadd docker
+sudo usermod -aG docker jenkins
+# Restart Docker service
+sudo systemctl restart docker
+
+# Restart Jenkins service
+sudo systemctl restart jenkins
+
+
+
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Code') {
+            steps {
+                echo 'Hello Cloning The Code'
+                git credentialsId: 'GithubPrivateCredsHussain', url: 'https://github.com/Mhd-Hsyn/test-deployment.git', branch: 'beta-master'
+                echo 'Code clone successfully'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Hello Building the code'
+                //sh "sudo docker compose down"
+                sh "docker compose up --build -d"
+                echo 'Docker Compose Build sucessfully'
+            }
+        }
+        stage('Push To Docker Hub') {
+            steps {
+                echo 'Testing the code'
+                withCredentials([usernamePassword(
+                    credentialsId: "DockerHubCred_mhdhsyn", 
+                    passwordVariable:"DockerHubPass", 
+                    usernameVariable:"dockerHubUser")]
+                    ){
+                        sh "docker login -u ${env.dockerHubUser} -p ${env.DockerHubPass}"
+                        sh "docker image tag djangocicd-web:latest ${env.dockerHubUser}/djangocicd-web:latest"
+                        sh "docker push ${env.dockerHubUser}/djangocicd-web:latest"
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying the Code'
+            }
+        }
+    }
+}
+
+
+######################################################################################
+
+FOR .env
+
+✅ Best Practice: Jenkins ke through .env file banane ka tarika
+🔐 1. Jenkins Credentials me values add karo (Secrets Store)
+
+Jenkins dashboard me jaake:
+
+    Manage Jenkins → Credentials → (Global or Project-specific) → Add Credentials
+
+    Type: "Secret text" (or Username and Password if needed)
+
+    Add following secrets one by one:
+
+        DJANGO_SECRET_KEY
+
+        ALLOW_HOST
+
+        USER_KEY
+
+        ADMIN_KEY
+
+    Har ek key ko ek alag Credential ID se save karo.
+
+
+
+set ID like this  === >>>    TEST_PROJECT_DJANGO_SECRET_KEY
+
+
+
+pipeline {
+    agent any
+
+    environment {
+        DJANGO_SECRET_KEY = credentials('DJANGO_SECRET_KEY_ID')
+        ALLOW_HOST = credentials('ALLOW_HOST_ID')
+        USER_KEY = credentials('USER_KEY_ID')
+        ADMIN_KEY = credentials('ADMIN_KEY_ID')
+    }
+
+    stages {
+        stage('Generate .env File') {
+            steps {
+                script {
+                    def envContent = """
+DJANGO_SECRET_KEY=${env.DJANGO_SECRET_KEY}
+ALLOW_HOST=${env.ALLOW_HOST}
+USER_KEY=${env.USER_KEY}
+ADMIN_KEY=${env.ADMIN_KEY}
+"""
+                    writeFile file: '.env', text: envContent
+                }
+                echo '.env file created successfully'
+            }
+        }
+
+        // Continue with your Build/Deploy stages
+    }
+}
+
+
+######################################################################################
+
+
+********************  Complete Jenkins File   ********************
+
+
+pipeline {
+    agent {label "TestNodeLabel"}
+    
+    environment {
+        DJANGO_SECRET_KEY = credentials('TEST_PROJECT_DJANGO_SECRET_KEY')
+    }
+
+    stages {
+        stage('Clone Code') {
+            steps {
+                echo 'Hello Cloning The Code'
+                git credentialsId: 'GithubPrivateCredsHussain', url: 'https://github.com/Mhd-Hsyn/test-deployment.git', branch: 'beta-master'
+                echo 'Code clone successfully'
+            }
+        }
+        stage('Generate .env File') {
+            steps {
+                script {
+                    def envContent = """
+DJANGO_SECRET_KEY=${env.DJANGO_SECRET_KEY}
+"""
+                    writeFile file: '.env', text: envContent
+                }
+                echo '.env file created successfully'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Hello Building the code'
+                sh "sudo docker compose down"
+                sh "sudo docker compose up --build -d"
+                echo 'Docker Compose Build sucessfully'
+            }
+        }
+        stage('Push To Docker Hub') {
+            steps {
+                echo 'Testing the code'
+                withCredentials([usernamePassword(
+                    credentialsId: "DockerHubCred_mhdhsyn", 
+                    passwordVariable:"DockerHubPass", 
+                    usernameVariable:"dockerHubUser")]
+                    ){
+                        sh "sudo docker login -u ${env.dockerHubUser} -p ${env.DockerHubPass}"
+                        sh "sudo docker image tag djangocicd-web:latest ${env.dockerHubUser}/djangocicd-web:latest"
+                        sh "sudo docker push ${env.dockerHubUser}/djangocicd-web:latest"
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying the Code'
+            }
+        }
+    }
+}
 
 
 
