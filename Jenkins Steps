@@ -1,4 +1,4 @@
-JENKINS SETUP
+	JENKINS SETUP
 
 ssh -i "Law-Firm-AWS.pem" ubuntu@ec2-52-90-171-118.compute-1.amazonaws.com
 (lawfirm agent/node)   ip == >> 52.90.171.118
@@ -580,6 +580,32 @@ sudo systemctl restart jenkins
 
 		# Step 4: Test connection
 			ssh -T git@github.com
+
+
+#################################################################################
+
+
+Now You can setup JenkinsFile in your project repo
+
+
+ "Definition"    
+ 	change from "pipeline scrtpt"  to  === >>  "pipline script from SCM"
+ 	
+ 	 "SCM"   == >> "git"
+ 	 
+ 	 "Credentials"    === >>   "ssh not working, but token is working"
+ 	 "Branch name"
+ 	 "Script Path"    === >>   "same as jenkin's file ame in your repository"
+ 	 
+ 	 
+
+
+
+
+
+
+
+
 
 
 
