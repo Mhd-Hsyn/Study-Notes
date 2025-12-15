@@ -74,6 +74,25 @@ use DOCKER in UBUNTU User
 
 
 
+		############		DELETE		############
+
+ - ls /etc/systemd/system | grep actions.runner
+
+(output) actions.runner.Mhd-Hsyn-Law_Firm-CRM.ip-172-31-19-61.service
+
+sudo systemctl stop [output]
+sudo systemctl disable [output]
+
+systemctl status [output]
+
+2️⃣ Agar permanently delete karni hai service file
+⚠️ sirf tab karo jab sure ho ke dobara nahi chahiye
+
+sudo rm /etc/systemd/system/[output]
+sudo systemctl daemon-reload
+
+
+
 
 
 
